@@ -2,10 +2,10 @@ const express = require('express');
 
 const app = express();
 
-app.use(express.static('./dist/app-angular-pointage'));
+app.use(express.static('./dist/AppAngularPointage'));
 
 app.get('/*', function(req, res) {
-    res.sendFile('index.html', {root: './dist/app-angular-pointage/'}
+    res.sendFile('index.html', {root: './dist/AppAngularPointage/'}
   );
 });
 
