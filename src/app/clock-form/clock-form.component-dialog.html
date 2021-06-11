@@ -1,0 +1,12 @@
+<h1 mat-dialog-title style="text-align: center;">Information</h1>
+<div mat-dialog-content>
+
+    <span *ngIf="data.message === 'error1'">L'heure de début ne peut être supérieure à l'heure de fin.</span>
+
+    <span *ngIf="data.message === 'error2'">L'heure de fin ne peut être inférieure à l'heure de début.</span>
+
+    <span *ngIf="data.message === 'error3'">Un ou plusieurs champs sont restés vides. Veuillez fournir une heure complète.</span>
+
+    <span *ngIf="data.message === 'success'">Heure modifiée avec succès.</span>
+
+</div>

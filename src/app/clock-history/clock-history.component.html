@@ -1,0 +1,22 @@
+<h2>Feuille de pointage</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Arrivée</th>
+            <th>Départ</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let item of employees$ | async">
+            <td>{{ item.clockInDate }}</td>
+            <td>{{ item.clockInTime }}</td>
+            <td>{{ item.clockOutTime }}</td>
+            <td>{{ item.forename }}</td>
+            <td>{{ item.surname }}</td>
+        </tr>
+    </tbody>
+</table>

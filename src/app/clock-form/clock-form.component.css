@@ -1,0 +1,44 @@
+td {
+  vertical-align: middle;
+}
+
+.clockIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clockIn > mat-icon {
+  height: 23px;
+  width: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clockIn > mat-icon:hover {
+  cursor: pointer;
+  color: rgb(83, 83, 83);
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input-time::-webkit-outer-spin-button,
+.input-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input-time[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.example-full-width {
+  width: 16px;
+}
+
+.clockInHours {
+  display: flex;
+  align-items: baseline;
+  margin-right: 10px;
+}

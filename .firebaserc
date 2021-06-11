@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "app-angular-pointage": {
+      "hosting": {
+        "AppAngularPointage": [
+          "app-angular-pointage"
+        ]
+      }
+    }
+  }
+}

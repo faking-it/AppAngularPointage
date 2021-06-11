@@ -1,0 +1,37 @@
+<h2>Liste des employé.e.s</h2>
+
+<div class="appAngularPointage-findEmployeeContainer">
+    <p>
+        Chercher un.e employé.e par son prénom:
+        <input type="text" id="item-input" #newItem (keyup)="updateEmployee(newItem.value)">
+        <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="getEmployeesByName(newItem.value)"
+            [disabled]="newItem.value === ''">
+            Chercher
+        </button>
+    </p>
+</div>
+
+
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Poste</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let employee of employees$ | async">
+            <td>{{ employee.forename }}</td>
+            <td>{{ employee.surname }}</td>
+            <td>{{ employee.position }}</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<p>{{info}}</p>

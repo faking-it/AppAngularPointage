@@ -1,0 +1,81 @@
+<h2>Heures d'arrivée/de départ des employé.e.s</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Arrivée</th>
+            <th>Départ</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let item of scheduleList">
+            <td>{{ item.forename }}</td>
+            <td>{{ item.surname }}</td>
+            <td>{{ item.clockInDate }}</td>
+            <td>
+                <div class="clockIn">
+                    <div class="clockInHours" *ngIf="item.clockInHoursInput == true">
+                        <form [formGroup]="checkoutForm" class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>{{ item.clockInHours }}</mat-label>
+                                <input formControlName="clockInHours" class="input-time" matInput  type="number"  maxlength="2" placeholder="00">
+                            </mat-form-field>
+                        </form>
+                        :
+                        <form [formGroup]="checkoutForm" class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>{{ item.clockInMin }}</mat-label>
+                                <input formControlName="clockInMin" class="input-time" matInput maxlength="2" type="number" placeholder="00">
+                            </mat-form-field>
+                        </form>
+                    </div>
+                    
+                    <div class="clockInHours" *ngIf="item.clockInHoursInput != true">{{ item.clockInTime }}</div>
+                    <button *ngIf="item.clockInDate == ''"
+                        type="button" 
+                        class="btn btn-primary btn-sm"
+                        (click)="updateEmployeeClockIn(item.id, item)">
+                        Pointer
+                    </button>
+                    <mat-icon *ngIf="item.clockInTime != '' && item.clockInHoursInput != true" (click)="updateHoursClockInInput(item.id, item)">update</mat-icon>
+                    <mat-icon *ngIf="item.clockInHoursInput == true" (click)="updateHoursClockIn(item.id, item)">check_circle_outline</mat-icon>
+                    <mat-icon *ngIf="item.clockInHoursInput == true" (click)="undoClockIn(item.id, item)">highlight_off</mat-icon>
+                </div>
+            </td>
+            <td>
+                <div class="clockIn">
+                    <div class="clockInHours" *ngIf="item.clockOutHoursInput == true">
+                        <form [formGroup]="checkoutForm" class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>{{ item.clockOutHours }}</mat-label>
+                                <input formControlName="clockOutHours" class="input-time" matInput  type="number"  maxlength="2" placeholder="00">
+                            </mat-form-field>
+                        </form>
+                        :
+                        <form [formGroup]="checkoutForm" class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>{{ item.clockOutMin }}</mat-label>
+                                <input formControlName="clockOutMin" class="input-time" matInput maxlength="2" type="number" placeholder="00">
+                            </mat-form-field>
+                        </form>
+                    </div>
+                    
+                    <div class="clockInHours" *ngIf="item.clockOutHoursInput != true">{{ item.clockOutTime }}</div>
+                    <button *ngIf="item.clockOutTime == ''"
+                        type="button" 
+                        class="btn btn-primary btn-sm"
+                        (click)="updateEmployeeClockOut(item.id, item)"
+                        [disabled]="item.clockInTime == ''">
+                        Pointer
+                    </button>
+                    <mat-icon *ngIf="item.clockOutTime != '' && item.clockOutHoursInput != true" (click)="updateHoursClockOutInput(item.id, item)">update</mat-icon>
+                    <mat-icon *ngIf="item.clockOutHoursInput == true" (click)="updateHoursClockOut(item.id, item)">check_circle_outline</mat-icon>
+                    <mat-icon *ngIf="item.clockOutHoursInput == true" (click)="undoClockOut(item.id, item)">highlight_off</mat-icon>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

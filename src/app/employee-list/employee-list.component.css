@@ -1,0 +1,21 @@
+h2,
+table {
+  margin: 10px;
+}
+
+table {
+  width: -webkit-fill-available;
+}
+
+.appAngularPointage-findEmployeeContainer > p > input {
+  height: 25px;
+  vertical-align: middle;
+  outline: none;
+  text-align: center;
+}
+
+.appAngularPointage-findEmployeeContainer > p > button {
+  padding: 1px 5px 1px 5px;
+  margin: 0px 5px 0px 5px;
+  vertical-align: middle;
+}
