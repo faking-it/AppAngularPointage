@@ -14,8 +14,9 @@ table {
   text-align: center;
 }
 
-.appAngularPointage-findEmployeeContainer > p > button {
-  padding: 1px 5px 1px 5px;
+.appAngularPointage-findEmployeeContainer > p > mat-button-toggle-group {
   margin: 0px 5px 0px 5px;
   vertical-align: middle;
+  height: 25px;
+  align-items: center;
 }

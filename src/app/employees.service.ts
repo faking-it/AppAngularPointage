@@ -13,10 +13,11 @@ export class EmployeesService {
     return this.firestore.collection<Employee>('employees').valueChanges();
   }
 
-  nameFilter (name : string | null) {
+  nameFilter (name : string, field: string) {
+    name = name.charAt(0).toUpperCase() + name.slice(1);
     return this.firestore.collection<Employee>('employees', ref => {
       let query : firebase.default.firestore.CollectionReference | firebase.default.firestore.Query = ref;
-      query = query.where('forename', '==', name);
+      query = query.where(field, '>=', name).where(field, '<=', name + '\uf8ff');
       return query;
     }).snapshotChanges();
   }

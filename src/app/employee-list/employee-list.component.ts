@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeesService } from "../employees.service";
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, timer } from 'rxjs';
+import { debounce, map } from 'rxjs/operators';
 import { Employee } from "../employee";
 
 @Component({
@@ -23,8 +23,9 @@ export class EmployeeListComponent implements OnInit {
     this.employees$ = this.employeesService.getAll();
   }
 
-  getEmployeesByName(name: string | null) {
-    this.employees$ = this.employeesService.nameFilter(name).pipe(
+  updateEmployee(name: string, selectFilter: string) {
+    this.employees$ = this.employeesService.nameFilter(name.toLowerCase(), selectFilter).pipe(
+      debounce(() => timer(500)),
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Employee;
         const id2 = a.payload.doc.id;
@@ -32,9 +33,7 @@ export class EmployeeListComponent implements OnInit {
         return { id2, ...data };
       }))
     );
-  }
 
-  updateEmployee(name: string | null) {
     if (name === "") {
       this.getEmployees();
       this.info = "";
