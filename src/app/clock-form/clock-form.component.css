@@ -42,3 +42,7 @@ td {
   align-items: baseline;
   margin-right: 10px;
 }
+
+.clock {
+  margin-bottom: 15px;
+}

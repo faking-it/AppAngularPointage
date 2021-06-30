@@ -6,12 +6,21 @@
         <div class="name">
             <mat-form-field appearance="fill">
                 <mat-label>Nom</mat-label>
-                <mat-select formControlName="name">
+                <mat-select formControlName="name"
+                            [ngClass]="{'is-invalid': (clockForm.get('name')?.touched ||
+                            clockForm.get('name')?.dirty) &&
+                            !clockForm.get('name')?.valid }">
                   <mat-option *ngFor="let item of data.scheduleList" value="{{item.forename}}">
                     {{item.forename}}
                   </mat-option>
                 </mat-select>
             </mat-form-field>
+            <span class="invalid-feedback">
+                <span *ngIf="!clockForm.get('name')?.valid">
+                  Veuillez sélectionner un nom.
+                </span>
+                <span>lol</span>
+            </span>
         </div>
         
         <div class="date">

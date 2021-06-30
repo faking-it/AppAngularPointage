@@ -56,7 +56,7 @@ export class ClockFormComponent implements OnInit {
     });
   }
 
-  updateEmployeeClockIn(employeeId: string | undefined, data: Employee): void {
+  /*updateEmployeeClockIn(employeeId: string | undefined, data: Employee): void {
     this.scheduleDetails = this.scheduleList.find((employee: Employee) => employee.id === employeeId);
     const date = new Date;
     const dateString = date.toLocaleString('fr-BE');
@@ -198,7 +198,7 @@ export class ClockFormComponent implements OnInit {
           this.openDialog(this.errorId);
     }
     
-  }
+  }*/
 
   updateInputs() {}
 
@@ -225,26 +225,9 @@ export class ClockFormComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
-
-  test(data: Employee): void {
-    const employeeId = "4iY7Ee7uEIuu6SAZVUVX";
-    this.scheduleDetails = this.scheduleList.find((employee: Employee) => employee.id === employeeId);
-    const date = new Date;
-    const dateString = date.toLocaleString('fr-BE');
-
-    data.dates.item.date = dateString.split(", ")[0];
-    data.dates.item.item.time = dateString.split(" ")[1];
-    data.dates.item.item.time = data.clockInTime.split(":")[0] + ":" + data.clockInTime.split(":")[1];
-    
-    this.employeesService.updateEmployee(employeeId, data).then();
   }
 
 }
-
 
 @Component({
   selector: 'clock-form.component-dialog',
@@ -258,21 +241,22 @@ export class DialogDataError {
   selector: 'clock-form.component-form',
   templateUrl: 'clock-form.component-form.html',
 })
-export class ClockFormPopUp {
-  clockForm: FormGroup;
+export class ClockFormPopUp implements OnInit{
+  clockForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ClockFormPopUp>,
-    @Inject(MAT_DIALOG_DATA) public data: ClockForm) {
+    @Inject(MAT_DIALOG_DATA) public data: ClockForm) {}
 
-      this.clockForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        time: ['', Validators.required],
-        task: ['', Validators.required],
-        comment: ''
-      })
-    }
+  ngOnInit(): void {
+    this.clockForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      time: ['', Validators.required],
+      task: ['', Validators.required],
+      comment: ''
+    })
+  }
   
   save(): void {
     console.log(this.clockForm);
