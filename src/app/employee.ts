@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export interface Employee {
      id?: string;
      forename: string;
@@ -14,4 +16,14 @@ export interface Employee {
      clockOutHours: string;
      clockOutMinInput: boolean;
      clockOutMin: string;
+     dates: {
+          item : {
+               date: string,
+               item: {
+                    time: string,
+                    task: string,
+                    comment: string
+               }
+          }
+     }
 }

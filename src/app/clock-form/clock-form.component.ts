@@ -1,11 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { EmployeesService } from "../employees.service";
 import { Employee } from "../employee";
-import { FormBuilder } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
   message: 'error1' | 'error2' | 'error3' | 'success';
+}
+
+export interface ClockForm {
+  scheduleList: Employee[];
+  tasks: [];
 }
 
 @Component({
@@ -35,7 +40,10 @@ export class ClockFormComponent implements OnInit {
     public dialog: MatDialog,
     ) {}
 
-  ngOnInit(): void {this.getSchedules();this.updateInputs()}
+  ngOnInit(): void {
+    this.getSchedules();
+    this.updateInputs();
+  }
 
   getSchedules(): void {
     this.employeesService.getSchedules().subscribe(res => {
@@ -202,6 +210,39 @@ export class ClockFormComponent implements OnInit {
     });
   }
 
+  openForm(): void {
+    const dialogRef = this.dialog.open(ClockFormPopUp, {
+      data: {
+        scheduleList: this.scheduleList,
+        tasks: [
+          "Arrivée",
+          "Programmation",
+          "Livraison",
+          "Chaine",
+          "Pause",
+          "Départ"
+        ]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  test(data: Employee): void {
+    const employeeId = "4iY7Ee7uEIuu6SAZVUVX";
+    this.scheduleDetails = this.scheduleList.find((employee: Employee) => employee.id === employeeId);
+    const date = new Date;
+    const dateString = date.toLocaleString('fr-BE');
+
+    data.dates.item.date = dateString.split(", ")[0];
+    data.dates.item.item.time = dateString.split(" ")[1];
+    data.dates.item.item.time = data.clockInTime.split(":")[0] + ":" + data.clockInTime.split(":")[1];
+    
+    this.employeesService.updateEmployee(employeeId, data).then();
+  }
+
 }
 
 
@@ -211,4 +252,31 @@ export class ClockFormComponent implements OnInit {
 })
 export class DialogDataError {
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+}
+
+@Component({
+  selector: 'clock-form.component-form',
+  templateUrl: 'clock-form.component-form.html',
+})
+export class ClockFormPopUp {
+  clockForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<ClockFormPopUp>,
+    @Inject(MAT_DIALOG_DATA) public data: ClockForm) {
+
+      this.clockForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        time: ['', Validators.required],
+        task: ['', Validators.required],
+        comment: ''
+      })
+    }
+  
+  save(): void {
+    console.log(this.clockForm);
+    console.log('Saved: ' + JSON.stringify(this.clockForm.value));
+  }
+
 }

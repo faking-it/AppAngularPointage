@@ -1,0 +1,51 @@
+<h1 mat-dialog-title style="text-align: center;">Pointer</h1>
+<div mat-dialog-content>
+    
+    <form [formGroup]="clockForm">
+
+        <div class="name">
+            <mat-form-field appearance="fill">
+                <mat-label>Nom</mat-label>
+                <mat-select formControlName="name">
+                  <mat-option *ngFor="let item of data.scheduleList" value="{{item.forename}}">
+                    {{item.forename}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <div class="date">
+            <mat-form-field appearance="fill">
+                <mat-label>Heure</mat-label>
+                <input matInput type="time" formControlName="time">
+              </mat-form-field>
+        </div>
+    
+        <div class="task">
+            <mat-form-field appearance="fill">
+                <mat-label>Tâche</mat-label>
+                <mat-select formControlName="task">
+                  <mat-option *ngFor="let item of data.tasks" value="{{item}}">
+                    {{item}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="comment">
+            <mat-form-field appearance="fill">
+                <mat-label>Commentaire</mat-label>
+                <textarea matInput formControlName="comment"></textarea>
+            </mat-form-field>
+        </div>
+    
+        <div class="submit" style="text-align: center;">
+            <mat-button-toggle-group aria-label="Font Style">
+                <mat-button-toggle (click)="save()">Valider</mat-button-toggle>
+                <mat-button-toggle (click)="dialogRef.close()">Annuler</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+    </form>
+
+</div>

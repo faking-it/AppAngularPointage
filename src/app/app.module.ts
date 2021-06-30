@@ -9,7 +9,7 @@ import { environment } from "../environments/environment";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
-import { ClockFormComponent, DialogDataError } from './clock-form/clock-form.component';
+import { ClockFormComponent, DialogDataError, ClockFormPopUp } from './clock-form/clock-form.component';
 import { ClockHistoryComponent } from './clock-history/clock-history.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EmployeeListComponent,
     ClockFormComponent,
     ClockHistoryComponent,
-    DialogDataError
+    DialogDataError,
+    ClockFormPopUp
   ],
   imports: [
     BrowserModule,
