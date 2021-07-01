@@ -13,6 +13,10 @@ export class EmployeesService {
     return this.firestore.collection<Employee>('employees').valueChanges();
   }
 
+  getTasks() {
+    return this.firestore.collection<Task>('tasks').valueChanges();
+  }
+
   nameFilter (name : string, field: string) {
     name = name.charAt(0).toUpperCase() + name.slice(1);
     return this.firestore.collection<Employee>('employees', ref => {
@@ -36,6 +40,10 @@ export class EmployeesService {
       query = query.where('clockInDate', '!=', '');
       return query;
     }).valueChanges();
+  }
+
+  postTask(data: object) {
+    return this.firestore.collection('tasks').add(data);
   }
 
 }

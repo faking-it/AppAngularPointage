@@ -1,7 +1,7 @@
 <h1 mat-dialog-title style="text-align: center;">Pointer</h1>
 <div mat-dialog-content>
     
-    <form [formGroup]="clockForm">
+    <form novalidate (ngSubmit)="save()" [formGroup]="clockForm">
 
         <div class="name">
             <mat-form-field appearance="fill">
@@ -10,34 +10,53 @@
                             [ngClass]="{'is-invalid': (clockForm.get('name')?.touched ||
                             clockForm.get('name')?.dirty) &&
                             !clockForm.get('name')?.valid }">
-                  <mat-option *ngFor="let item of data.scheduleList" value="{{item.forename}}">
+                  <mat-option   *ngFor="let item of data.scheduleList"
+                                value="{{item.forename}}" 
+                                (onSelectionChange)="clockForm.get('id')?.setValue(item.id)">
                     {{item.forename}}
                   </mat-option>
                 </mat-select>
-            </mat-form-field>
-            <span class="invalid-feedback">
-                <span *ngIf="!clockForm.get('name')?.valid">
-                  Veuillez sélectionner un nom.
+                <span class="invalid-feedback">
+                    <span *ngIf="!clockForm.get('name')?.valid">
+                      Veuillez sélectionner un nom.
+                    </span>
                 </span>
-                <span>lol</span>
-            </span>
+            </mat-form-field>
         </div>
         
         <div class="date">
             <mat-form-field appearance="fill">
                 <mat-label>Heure</mat-label>
-                <input matInput type="time" formControlName="time">
+                <input  matInput 
+                        type="time"
+                        formControlName="time"
+                        [ngClass]="{'is-invalid': (clockForm.get('time')?.touched ||
+                            clockForm.get('time')?.dirty) &&
+                            !clockForm.get('time')?.valid }">
+                <span class="invalid-feedback">
+                    <span *ngIf="!clockForm.get('hour')?.valid">
+                      Veuillez sélectionner une heure.
+                    </span>
+                </span>
               </mat-form-field>
         </div>
     
         <div class="task">
             <mat-form-field appearance="fill">
                 <mat-label>Tâche</mat-label>
-                <mat-select formControlName="task">
+                <mat-select formControlName="task"
+                            [ngClass]="{'is-invalid': (clockForm.get('task')?.touched ||
+                            clockForm.get('task')?.dirty) &&
+                            !clockForm.get('task')?.valid }">
                   <mat-option *ngFor="let item of data.tasks" value="{{item}}">
                     {{item}}
                   </mat-option>
                 </mat-select>
+                <span class="invalid-feedback">
+                    <span *ngIf="!clockForm.get('task')?.valid">
+                      Veuillez sélectionner une tâche.
+                    </span>
+                </span>
             </mat-form-field>
         </div>
     
@@ -50,7 +69,7 @@
     
         <div class="submit" style="text-align: center;">
             <mat-button-toggle-group aria-label="Font Style">
-                <mat-button-toggle (click)="save()">Valider</mat-button-toggle>
+                <button type="submit">Valider</button>
                 <mat-button-toggle (click)="dialogRef.close()">Annuler</mat-button-toggle>
             </mat-button-toggle-group>
         </div>

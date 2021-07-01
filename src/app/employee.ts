@@ -16,14 +16,12 @@ export interface Employee {
      clockOutHours: string;
      clockOutMinInput: boolean;
      clockOutMin: string;
-     dates: {
-          item : {
-               date: string,
-               item: {
-                    time: string,
-                    task: string,
-                    comment: string
-               }
-          }
-     }
 }
+ export interface Task {
+      id?: string;
+      date: string;
+      time: string;
+      task: string;
+      comment: string;
+      emloyeeId: string;
+ }
