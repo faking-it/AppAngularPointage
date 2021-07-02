@@ -20,8 +20,11 @@ export interface Employee {
  export interface Task {
       id?: string;
       date: string;
-      time: string;
+      timeIn: string;
+      timeOut: string;
       task: string;
       comment: string;
       emloyeeId: string;
+      forename: string;
+      surname: string;
  }

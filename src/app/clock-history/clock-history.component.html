@@ -4,17 +4,19 @@
     <thead class="table-dark">
         <tr>
             <th>Date</th>
-            <th>Arrivée</th>
-            <th>Départ</th>
+            <th>Tache</th>
+            <th>Début</th>
+            <th>Fin</th>
             <th>Prénom</th>
             <th>Nom</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let item of employees$ | async">
-            <td>{{ item.clockInDate }}</td>
-            <td>{{ item.clockInTime }}</td>
-            <td>{{ item.clockOutTime }}</td>
+        <tr *ngFor = "let item of tasks$ | async">
+            <td>{{ item.date }}</td>
+            <td>{{ item.task }}</td>
+            <td>{{ item.timeIn }}</td>
+            <td>{{ item.timeOut }}</td>
             <td>{{ item.forename }}</td>
             <td>{{ item.surname }}</td>
         </tr>

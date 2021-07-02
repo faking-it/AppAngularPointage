@@ -1,7 +1,7 @@
 <h1 mat-dialog-title style="text-align: center;">Pointer</h1>
 <div mat-dialog-content>
     
-    <form novalidate (ngSubmit)="save()" [formGroup]="clockForm">
+    <form novalidate (ngSubmit)="clockForm.valid ? save() : ''" [formGroup]="clockForm">
 
         <div class="name">
             <mat-form-field appearance="fill">
@@ -10,9 +10,9 @@
                             [ngClass]="{'is-invalid': (clockForm.get('name')?.touched ||
                             clockForm.get('name')?.dirty) &&
                             !clockForm.get('name')?.valid }">
-                  <mat-option   *ngFor="let item of data.scheduleList"
+                  <mat-option   *ngFor="let item of data.employees"
                                 value="{{item.forename}}" 
-                                (onSelectionChange)="clockForm.get('id')?.setValue(item.id)">
+                                (onSelectionChange)="clockForm.get('id')?.setValue(item.id); clockForm.get('surname')?.setValue(item.surname);">
                     {{item.forename}}
                   </mat-option>
                 </mat-select>

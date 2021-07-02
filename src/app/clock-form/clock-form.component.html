@@ -9,18 +9,23 @@
         <tr>
             <th>Prénom</th>
             <th>Nom</th>
-            <th>Date</th>
-            <th>Arrivée</th>
-            <th>Départ</th>
+            <th>Tâche</th>
+            <th>Début</th>
+            <th>Fin</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let item of scheduleList">
+        <tr *ngFor = "let item of tasks">
             <td>{{ item.forename }}</td>
             <td>{{ item.surname }}</td>
-            <td>{{ item.clockInDate }}</td>
-            <td>{{ item.clockInTime }}</td>
-            <td>{{ item.clockOutTime }}</td>
+            <td>{{ item.task }}</td>
+            <td>{{ item.timeIn }}</td>
+            <td *ngIf="item.timeOut != ''">{{ item.timeOut }}</td>
+            <td *ngIf="item.timeOut == ''">
+                <button type="button" class="btn btn-primary btn-sm clock" (click)="updateForm(item)">
+                    <mat-icon>alarm_on</mat-icon>
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>

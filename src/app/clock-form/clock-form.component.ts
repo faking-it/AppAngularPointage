@@ -19,8 +19,10 @@ export interface DialogData {
 })
 export class ClockFormComponent implements OnInit {
 
-  public scheduleList: Employee[] = [];
+  public employees: Employee[] = [];
   public scheduleDetails!: Employee | undefined;
+
+  tasks: any[] = [];
 
   inputHours!: string;
 
@@ -45,14 +47,24 @@ export class ClockFormComponent implements OnInit {
   }
 
   getSchedules(): void {
-    this.employeesService.getSchedules().subscribe(res => {
-      this.scheduleList = res.map((employee: any) => {
+    this.employeesService.getTasks().subscribe(res => {
+      this.tasks = res.map((task: any) => {
+        return {
+          ...task.payload.doc.data(),
+          id: task.payload.doc.id
+        } as any;
+      });
+    });
+
+    this.employeesService.getEmployees().subscribe(res => {
+      this.employees = res.map((employee: any) => {
         return {
           ...employee.payload.doc.data(),
-          id: employee.payload.doc.id
+          id: employee.payload.doc.id,
         } as Employee;
       });
     });
+
   }
 
   updateInputs() {}
@@ -68,8 +80,8 @@ export class ClockFormComponent implements OnInit {
   openForm(): void {
     const dialogRef = this.dialog.open(ClockFormPopUp, {
       data: {
-        scheduleList: this.scheduleList,
-        
+        employees: this.employees,
+        update: false,
         tasks: [
           "Arrivée",
           "Programmation",
@@ -78,6 +90,28 @@ export class ClockFormComponent implements OnInit {
           "Pause",
           "Départ"
         ]
+      }
+    });
+
+  }
+
+  updateForm(item: Task): void {
+    const dialogRef = this.dialog.open(ClockFormPopUp, {
+      data: {
+        update: true,
+        employees: this.employees,
+        name: item.forename,
+        tasks: [
+          "Arrivée",
+          "Programmation",
+          "Livraison",
+          "Chaine",
+          "Pause",
+          "Départ"
+        ],
+        task: item.task,
+        timeIn: item.timeIn,
+        id: item.id
       }
     });
 
@@ -101,10 +135,13 @@ export class ClockFormPopUp implements OnInit{
   clockForm!: FormGroup;
   public formData = {
     date : "",
-    time: "",
+    timeIn: "",
+    timeOut: "",
     task: "",
     comment: "",
-    employeeId: ""
+    employeeId: "",
+    forename: "",
+    surname: ""
   };
 
   constructor(
@@ -115,13 +152,26 @@ export class ClockFormPopUp implements OnInit{
 
   ngOnInit(): void {
     
-    this.clockForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      time: ['', Validators.required],
-      task: ['', Validators.required],
-      comment: '',
-      id: ''
-    })
+    if (this.data.update == true) {
+      this.clockForm = this.formBuilder.group({
+        name: [{value: this.data.name, disabled: true}, Validators.required],
+        time: ['', Validators.required],
+        task: [{value: this.data.task, disabled: true}, Validators.required],
+        comment: '',
+        id: '',
+        surname: ''
+      });
+    } else {
+      this.clockForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        time: ['', Validators.required],
+        task: ['', Validators.required],
+        comment: '',
+        id: '',
+        surname: ''
+      })
+    }
+    
   }
   
   save(): void {
@@ -130,15 +180,23 @@ export class ClockFormPopUp implements OnInit{
 
     const date = new Date;
     const dateString = date.toLocaleString('fr-BE');
+    
+    if (this.data.update == true) {
+      const payload = {timeOut: this.clockForm.value.time};
+      this.employeesService.updateTask(this.data.id, payload);
+    } else {
+      this.formData.date = dateString.split(", ")[0];
+      this.formData.timeIn = this.clockForm.value.time;
+      this.formData.task = this.clockForm.value.task;
+      this.formData.comment = this.clockForm.value.comment;
+      this.formData.employeeId = this.clockForm.value.id;
+      this.formData.forename = this.clockForm.value.name;
+      this.formData.surname = this.clockForm.value.surname;
+      
+      this.employeesService.postTask(this.formData)
+    }
 
-    this.formData.date = dateString.split(", ")[0];
-    this.formData.time = this.clockForm.value.time;
-    this.formData.task = this.clockForm.value.task;
-    this.formData.comment = this.clockForm.value.comment;
-    this.formData.employeeId = this.clockForm.value.id;
-    
-    this.employeesService.postTask(this.formData)
-    
+    this.dialogRef.close();
   }
 
 }

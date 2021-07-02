@@ -23,8 +23,8 @@ export class EmployeeListComponent implements OnInit {
     this.employees$ = this.employeesService.getAll();
   }
 
-  updateEmployee(name: string, selectFilter: string) {
-    this.employees$ = this.employeesService.nameFilter(name.toLowerCase(), selectFilter).pipe(
+  updateEmployee(forename: string, surname: string) {
+    this.employees$ = this.employeesService.nameFilter(forename.toLowerCase(), surname.toLowerCase()).pipe(
       debounce(() => timer(500)),
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Employee;
@@ -34,7 +34,7 @@ export class EmployeeListComponent implements OnInit {
       }))
     );
 
-    if (name === "") {
+    if (forename === "" && surname === "") {
       this.getEmployees();
       this.info = "";
     }

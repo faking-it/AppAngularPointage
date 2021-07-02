@@ -3,11 +3,8 @@
 <div class="appAngularPointage-findEmployeeContainer">
     <p>
         Chercher un.e employé.e par son
-        <mat-button-toggle-group #selectFilter="matButtonToggleGroup" value="forename" aria-label="Font Style">
-            <mat-button-toggle value="forename" (click)="newItem.value=''; getEmployees()">prénom</mat-button-toggle>
-            <mat-button-toggle value="surname" (click)="newItem.value=''; getEmployees()">nom</mat-button-toggle>
-        </mat-button-toggle-group>
-        <input type="text" id="item-input" #newItem (keyup)="updateEmployee(newItem.value, selectFilter.value)">
+        <input type="text" id="item-input" #forename (keyup)="updateEmployee(forename.value, surname.value)">
+        <input type="text" id="item-input" #surname (keyup)="updateEmployee(forename.value, surname.value)">
     </p>
 </div>
 

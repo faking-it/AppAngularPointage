@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeesService } from "../employees.service";
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Employee } from "../employee";
+import { Task } from "../employee";
 
 @Component({
   selector: 'app-clock-history',
@@ -11,14 +10,14 @@ import { Employee } from "../employee";
 })
 export class ClockHistoryComponent implements OnInit {
 
-  employees$!: Observable<Employee[]>;
+  tasks$!: Observable<Task[]>;
 
   constructor(private employeesService: EmployeesService) { }
 
   ngOnInit(): void {this.getEmployees();}
 
   getEmployees() {
-    this.employees$ = this.employeesService.historyFilter();
+    this.tasks$ = this.employeesService.historyFilter();
   }
 
 }
